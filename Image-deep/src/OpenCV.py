@@ -67,6 +67,8 @@ class OpenCV_image():
         plt.imshow(draw_image)
         plt.show() 
 
+
+# 동영상에 초록색 사각형 씌우는 예제 일 뿐임.
 class OpenCV_video():
 
     
@@ -103,7 +105,7 @@ class OpenCV_video():
                 break
             index += 1
             print('frame :', index, '처리 완료')
-            cv2.rectangle(img_frame, (300, 100, 800, 400), color=green_color, thickness=2)
+            cv2.rectangle(img_frame, (300, 100, 800, 400), color=green_color, thickness=2) 
             caption = "frame:{}".format(index)
             cv2.putText(img_frame, caption, (300, 95), cv2.FONT_HERSHEY_SIMPLEX, 0.7, red_color, 1)
             
