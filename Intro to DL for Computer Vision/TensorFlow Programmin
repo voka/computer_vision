@@ -1,0 +1,62 @@
+Exercise 1
+We want to distinguish whether an image is a hot dog or not. But our models classify pictures into 1000 different categories. Write a function that takes the models predictions (in the same format as preds from the set-up code) and returns a list of True and False values.
+
+Some tips:
+
+Work iteratively. Figure out one line at a time outsie the function, and print that line's output to make sure it's right. Once you have all the code you need, move it into the function is_hot_dog. If you get an error, check that you have copied the right code and haven't left anything out.
+The raw data we loaded in img_paths had two images of hot dogs, followed by two images of other foods. So, if you run your function on preds, which represents the output of the model on these images, your function should return [True, True, False, False].
+You will want to use the decode_predictions function that was also used in the code provided above. We provided a line with this in the code cell to get you started.
+
+example 1.
+
+def is_hot_dog(preds):
+    decoded = decode_predictions(preds, top=1)
+    data = [(i[0][1]=='hotdog') for i in decoded] 
+    return data
+    
+    
+# Check your answer
+q_1.check()
+
+example 2.
+
+def hot_dog_preds(model,paths):
+    test_data = read_and_prep_images(paths)
+    preds = model.predict(test_data)
+    decode = decode_predictions(preds, top=1)
+    data = [i[0][2] for i in decoded if i[0][1]=='hotdog']
+    return data
+    
+def calc_accuracy(model, paths_to_hotdog_images, paths_to_other_images):
+    a = hot_dog_preds(model,paths_to_hotdog_images)
+    b = hot_dog_preds(model,paths_to_other_images)
+    return ((sum(a)/len(a)) + (sum(b)/len(b)))/2
+    
+    pass
+
+# Code to call calc_accuracy.  my_model, hot_dog_paths and not_hot_dog_paths were created in the setup code
+my_model_accuracy = calc_accuracy(my_model, hot_dog_paths, not_hot_dog_paths)
+print("Fraction correct in small test set: {}".format(my_model_accuracy))
+
+# Check your answer
+q_2.check()
+
+example 3.
+
+# import the model
+from tensorflow.keras.applications import VGG16
+
+
+vgg16_model = VGG16(weights='../input/vgg16/vgg16_weights_tf_dim_ordering_tf_kernels.h5')
+
+# calculate accuracy on small dataset as a test
+vgg16_accuracy = calc_accuracy(vgg16_model, hot_dog_paths, not_hot_dog_paths)
+
+print("Fraction correct in small dataset: {}".format(vgg16_accuracy))
+
+# Check your answer
+q_3.check()
+
+
+
+
